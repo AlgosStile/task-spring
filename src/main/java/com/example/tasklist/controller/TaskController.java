@@ -1,8 +1,9 @@
 package com.example.tasklist.controller;
 
 import com.example.tasklist.repositories.TaskRepository;
-import com.example.tasklist.service.Task;
+import com.example.tasklist.domain.Task;
 import com.example.tasklist.status.TaskStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -11,19 +12,11 @@ import java.util.List;
 /**
  * Контроллер для управления задачами.
  */
+@AllArgsConstructor
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
     private final TaskRepository taskRepository;
-
-    /**
-     * Конструктор для TaskController.
-     *
-     * @param taskRepository Репозиторий Task
-     */
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
 
     /**
      * Добавляет новую задачу.

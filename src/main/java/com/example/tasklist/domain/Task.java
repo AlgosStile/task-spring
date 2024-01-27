@@ -1,9 +1,10 @@
-package com.example.tasklist.service;
+package com.example.tasklist.domain;
 
 import com.example.tasklist.status.TaskStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Task {
 
     @Id
@@ -26,10 +28,6 @@ public class Task {
     private TaskStatus status;
 
     private LocalDateTime creationDate;
-
-    public Task() {
-
-    }
 
 }
 

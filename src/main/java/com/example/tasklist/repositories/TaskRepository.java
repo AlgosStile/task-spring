@@ -1,6 +1,6 @@
 package com.example.tasklist.repositories;
 
-import com.example.tasklist.service.Task;
+import com.example.tasklist.domain.Task;
 import com.example.tasklist.status.TaskStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
