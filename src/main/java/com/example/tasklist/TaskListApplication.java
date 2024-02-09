@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Bean;
 /**
  * Основной класс приложения для TaskList.
  */
-@SpringBootApplication
 @EnableEurekaServer
+@SpringBootApplication
 public class TaskListApplication {
 
     public static void main(String[] args) {
