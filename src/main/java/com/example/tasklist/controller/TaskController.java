@@ -4,6 +4,7 @@ import com.example.tasklist.repositories.TaskRepository;
 import com.example.tasklist.domain.Task;
 import com.example.tasklist.status.TaskStatus;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -25,9 +26,10 @@ public class TaskController {
      * @return Добавленная задача
      */
     @PostMapping
-    public Task addTask(@RequestBody Task task) {
+    public ResponseEntity<Task> addTask(@RequestBody Task task) {
         task.setCreationDate(LocalDateTime.now());
-        return taskRepository.save(task);
+        Task savedTask = taskRepository.save(task);
+        return ResponseEntity.ok(savedTask);
     }
 
     /**
@@ -47,8 +49,8 @@ public class TaskController {
      * @return Список задач с указанным статусом
      */
     @GetMapping("/status/{status}")
-    public List<Task> getTasksByStatus(@PathVariable TaskStatus status) {
-        return taskRepository.findByStatus(status);
+    public List<Task> getTasksByStatus(@PathVariable String status) {
+        return taskRepository.findByStatus(TaskStatus.valueOf(status));
     }
 
     /**
@@ -59,13 +61,14 @@ public class TaskController {
      * @return Обновленная задача
      */
     @PutMapping("/{id}")
-    public Task updateTaskStatus(@PathVariable Long id, @RequestBody Task task) {
+    public ResponseEntity<Task> updateTaskStatus(@PathVariable Long id, @RequestBody Task task) {
         Task existingTask = taskRepository.findById(id).orElse(null);
         if (existingTask != null) {
             existingTask.setStatus(task.getStatus());
-            return taskRepository.save(existingTask);
+            Task updatedTask = taskRepository.save(existingTask);
+            return ResponseEntity.ok(updatedTask);
         } else {
-            return null;
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -75,7 +78,8 @@ public class TaskController {
      * @param id Идентификатор задачи для удаления
      */
     @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
